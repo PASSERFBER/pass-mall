@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/mall-content-ms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-content-ms/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-eureka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-generator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-generator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-manager-ms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-mapper/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-pojo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-search-ms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mall-zuul/src/main/java" charset="UTF-8" />
+  </component>
+</project>

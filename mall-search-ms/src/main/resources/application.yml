@@ -1,0 +1,20 @@
+server:
+  port: 8081
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: 'search-ms'
+  datasource:
+    username: root
+    password:
+    url: 'jdbc:mysql://localhost:3306/malldb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai'
+  data:
+    solr:
+      host: http://127.0.0.1:8080/solr
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+

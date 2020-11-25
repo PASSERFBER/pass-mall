@@ -1,0 +1,9 @@
+# Project exclude paths
+/mall-content-ms/target/
+/mall-eureka/target/
+/mall-generator/target/
+/mall-manager-ms/target/
+/mall-mapper/target/
+/mall-pojo/target/
+/mall-search-ms/target/
+/mall-zuul/target/
