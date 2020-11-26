@@ -1,16 +1,17 @@
 package com.pas.mall.service.impl;
 
-import com.pas.mall.mapper.TbGoodsDescMapper;
-import com.pas.mall.mapper.TbGoodsMapper;
-import com.pas.mall.mapper.TbItemMapper;
-import com.pas.mall.pojo.TbGoods;
-import com.pas.mall.pojo.TbItem;
+
+import com.alibaba.fastjson.JSON;
+import com.pas.mall.mapper.*;
+import com.pas.mall.pojo.*;
 import com.pas.mall.pojogroup.Goods;
 import com.pas.mall.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -22,6 +23,12 @@ public class GoodsServiceImpl implements GoodsService {
     private TbItemMapper tbItemMapper;
     @Autowired
     private TbGoodsDescMapper tbGoodsDescMapper;
+    @Autowired
+    private TbItemCatMapper tbItemCatMapper;
+    @Autowired
+    private TbSellerMapper tbSellerMapper;
+    @Autowired
+    private BrandMapper brandMapper;
 
     @Override
     public void add(Goods goods) {
@@ -37,7 +44,55 @@ public class GoodsServiceImpl implements GoodsService {
 
     private void setItemList(Goods goods) {
         if(goods.getTbGoods().getIsEnableSpec().equals("1")){
+            //判断一下是否启用了规格
+            for (TbItem item:goods.getListItem()) {
+                String title = goods.getTbGoods().getGoodsName();
+                Map<String,String> map = JSON.parseObject(item.getSpec(),Map.class);
+                for(String key:map.keySet()){
+                    title += " " + map.get(key);
+                }
+                item.setTitle(title);
+                setItemValue(goods,item);
+                tbItemMapper.insert(item);
+            }
+        }else{
+            TbItem item = new TbItem();
+            item.setTitle(goods.getTbGoods().getGoodsName());
+            item.setPrice(goods.getTbGoods().getPrice());
+            item.setNum(99999);
+            item.setStatus("0");
+            item.setIsDefault("1");
+            item.setSpec("{}");
+
+            setItemValue(goods,item);
+            tbItemMapper.insert(item);
         }
+    }
+
+    private void setItemValue(Goods goods, TbItem item) {
+        List<Map> imageList = JSON.parseArray(goods.getTbGoodsDesc().getItemImages(),Map.class);
+        //读取上传图片的地址
+        if (imageList.size()>0){
+            item.setImage((String) imageList.get(0).get("url"));
+        }
+        //设置各种ID
+        item.setCategoryid(goods.getTbGoods().getCategory3Id());
+        TbItemCat tbItemCat = tbItemCatMapper.selectByPrimaryKey(goods.getTbGoods().getCategory3Id());
+        item.setCategory(tbItemCat.getName());
+
+        item.setGoodsId(goods.getTbGoods().getId());
+        item.setSellerId(goods.getTbGoods().getSellerId());
+
+        TbSeller tbSeller = tbSellerMapper.selectByPrimaryKey(goods.getTbGoods().getSellerId());
+        item.setSeller(tbSeller.getName());
+
+        Brand brand = brandMapper.selectByPrimaryKey(goods.getTbGoods().getBrandId());
+        item.setBrand(brand.getName());
+
+
+        item.setCreateTime(new Date());
+        item.setUpdateTime(new Date());
+
     }
 
     @Override
@@ -80,4 +135,20 @@ public class GoodsServiceImpl implements GoodsService {
     public TbItem findItemListByGoodsIdListAndStatus(Long[] ids, String status) {
         return null;
     }
+
+    @Override
+    public List<TbItemCat> findByCateGoryId(Long parentId) {
+        TbItemCatExample tbItemCatExample = new TbItemCatExample();
+        TbItemCatExample.Criteria criteria = tbItemCatExample.createCriteria();
+        criteria.andParentIdEqualTo(parentId);
+
+        return tbItemCatMapper.selectByExample(tbItemCatExample);
+    }
+
+    @Override
+    public TbItemCat findTemplateId(Long id) {
+        return tbItemCatMapper.selectByPrimaryKey(id);
+    }
+
+
 }

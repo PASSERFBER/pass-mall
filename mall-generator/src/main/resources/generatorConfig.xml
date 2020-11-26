@@ -36,8 +36,8 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.pas.mall.mapper"
                              targetProject="mall-mapper\src\main\java"/>
-        <table tableName="tb_goods"/>
-        <table tableName="tb_goods_desc"/>
+        <table tableName="tb_seller"/>
+
 
 
         <!--生成全部表tableName设为%

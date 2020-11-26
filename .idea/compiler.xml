@@ -9,11 +9,11 @@
         <module name="mall-mapper" />
         <module name="mall-pojo" />
         <module name="mall-search-ms" />
-        <module name="mall-content-ms" />
         <module name="mall-eureka" />
         <module name="mall-generator" />
-        <module name="mall-manager-ms" />
         <module name="mall-zuul" />
+        <module name="mall-manager-ms" />
+        <module name="mall-content-ms" />
       </profile>
     </annotationProcessing>
   </component>
