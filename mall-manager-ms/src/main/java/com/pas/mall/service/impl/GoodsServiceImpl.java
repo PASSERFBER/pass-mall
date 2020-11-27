@@ -2,6 +2,7 @@ package com.pas.mall.service.impl;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pas.mall.entity.RespBean;
 import com.pas.mall.mapper.*;
 import com.pas.mall.pojo.*;
 import com.pas.mall.pojogroup.Goods;
@@ -97,7 +98,16 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<TbGoods> findAll() {
-        return tbGoodsMapper.selectByExample(null);
+        TbGoodsExample example = new TbGoodsExample();
+        TbGoodsExample.Criteria criteria = example.createCriteria();
+        criteria.andIsDeleteIsNull();
+        return tbGoodsMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<TbItemCat> findItemCat() {
+        System.out.println(tbItemCatMapper.selectByExample(null));
+        return tbItemCatMapper.selectByExample(null);
     }
 
     @Override
@@ -116,8 +126,8 @@ public class GoodsServiceImpl implements GoodsService {
             TbGoods tbGoods = tbGoodsMapper.selectByPrimaryKey(id);
             tbGoods.setIsDelete("1");
             tbGoodsMapper.updateByPrimaryKey(tbGoods);
+            System.out.println("删除成功");
         }
-
 
     }
 
@@ -149,6 +159,7 @@ public class GoodsServiceImpl implements GoodsService {
     public TbItemCat findTemplateId(Long id) {
         return tbItemCatMapper.selectByPrimaryKey(id);
     }
+
 
 
 }

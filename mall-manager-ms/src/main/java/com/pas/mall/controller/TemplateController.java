@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.pas.mall.entity.RespBean;
 import com.pas.mall.entity.ResultPage;
+import com.pas.mall.pojo.TbItemCat;
 import com.pas.mall.pojo.TbTypeTemplate;
 import com.pas.mall.service.TemplateService;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "TemplateController",description = "模板后端管理")
 @RestController
@@ -68,6 +70,14 @@ public class TemplateController {
         resultPage.setTotal(page.getTotal());
         System.out.println(resultPage);
         return resultPage;
-
     }
+
+    @ApiOperation("根据模板ID查询规格相关选项")
+    @GetMapping("/findBySpecList/{id}")
+    public List<Map> findBySpecList(@PathVariable Long id){
+        System.out.println(id);
+        return templateService.findSpecList(id);
+    }
+
+
 }

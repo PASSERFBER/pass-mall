@@ -1,5 +1,6 @@
 package com.pas.mall.service;
 
+import com.pas.mall.entity.RespBean;
 import com.pas.mall.pojo.TbGoods;
 import com.pas.mall.pojo.TbItem;
 import com.pas.mall.pojo.TbItemCat;
@@ -17,5 +18,6 @@ public interface GoodsService {
     public TbItem findItemListByGoodsIdListAndStatus(Long[] ids,String status);
     public List<TbItemCat> findByCateGoryId(Long parentId);
     public TbItemCat findTemplateId(Long id);
+    public List<TbItemCat> findItemCat();
 
 }
